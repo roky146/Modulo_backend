@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloxAdmin - Sistema de Gestión Seguro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Calibri', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+            font-size: 16px;
+        }
+        
+        .document {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #1e40af;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .meta-info {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e40af;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-top: 18px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        
+        .highlight-box {
+            background: #f0f4ff;
+            border-left: 4px solid #1e40af;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        
+        .table-container {
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .feature-item {
+            background: #f0f4ff;
+            padding: 12px;
+            border-radius: 3px;
+            border-left: 3px solid #2563eb;
+            font-size: 14px;
+        }
+
+        .feature-item strong {
+            color: #1e40af;
+        }
+        
+        .page-break {
+            page-break-after: always;
+            margin: 30px 0;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .svg-viewer-container {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+
+        .svg-viewer-toolbar {
+            background: #f0f4ff;
+            border-bottom: 1px solid #ddd;
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .svg-viewer-toolbar button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .svg-viewer-toolbar button:hover {
+            background: #2563eb;
+        }
+
+        .svg-viewer-toolbar input[type="file"] {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .svg-viewer-content {
+            width: 100%;
+            height: 500px;
+            overflow: auto;
+            position: relative;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+        }
+
+        .svg-viewer-content.dragging {
+            cursor: grabbing;
+        }
+
+        .svg-viewer-content svg {
+            user-select: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        .svg-viewer-content object {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .document {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">VELOXADMIN</div>
+            <div class="subtitle">Sistema de Gestión Seguro para Velox Motors</div>
+            <div class="meta-info">
+                Tarea: Solución Web Segura - Módulo Back-End<br>
+                Octubre 2025
+            </div>
+        </div>
+
+        <!-- 1. RESUMEN EJECUTIVO -->
+        <h1>1. Resumen</h1>
+        <div class="section">
+            <p>
+                Este proyecto presenta una solución web completa y segura denominada <strong>VeloxAdmin</strong>,
+                una plataforma de gestión de vehículos con autenticación robusta, control de acceso basado en roles 
+                y operaciones CRUD completas para productos (vehículos) y usuarios.
+            </p>
+            
+            <div class="highlight-box">
+                <strong>Objetivos clave:</strong>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Implementar autenticación y autorización segura</li>
+                    <li>Crear CRUD funcional para vehículos y usuarios</li>
+                    <li>Establecer roles diferenciados (admin y viewer)</li>
+                    <li>Garantizar seguridad en todas las transacciones</li>
+                    <li>Proporcionar una interfaz intuitiva y profesional</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 15px;">
+                La solución utiliza <strong>PHP con PDO</strong> como backend, <strong>base de datos relacional MySQL</strong>, 
+                y <strong>HTML5/CSS3/JavaScript</strong> en el frontend. Se implementan mecanismos avanzados de seguridad 
+                como sesiones seguras, rate limiting, protección CSRF, validación de archivos y auditoría completa de cambios.
+            </p>
+        </div>
+
+        <!-- 2. DISEÑO RÁPIDO -->
+        <h1>2. Diseño Rápido</h1>
+        
+        <h2>2.1 Modelo de Datos</h2>
+        <div class="section">
+            <p>La estructura relacional del proyecto está compuesta por las siguientes entidades principales:</p>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Tabla</th>
+                        <th>Descripción</th>
+                        <th>Campos Clave</th>
+                    </tr>
+                    <tr>
+                        <td><strong>usuarios</strong></td>
+                        <td>Almacena datos de usuarios del sistema</td>
+                        <td>id, username, password (hash), role_id, activo, profile_picture, timestamps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>usuarios_roles</strong></td>
+                        <td>Define roles y permisos disponibles</td>
+                        <td>id, nombre, permisos (JSON)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>vehiculos</strong></td>
+                        <td>Catalogo de productos (vehículos)</td>
+                        <td>id, nombre, precio, marca, modelo, año, engine_type, transmission, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>vehiculo_imagenes</strong></td>
+                        <td>Galería de imágenes por vehículo</td>
+                        <td>id, vehiculo_id, imagen_url, orden</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h2>2.2 Rutas Principales</h2>
+        <div class="section">
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Ruta</th>
+                        <th>Método</th>
+                        <th>Descripción</th>
+                        <th>Autenticación</th>
+                    </tr>
+                    <tr>
+                        <td><code>/</code></td>
+                        <td>GET</td>
+                        <td>Home público</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><code>/login</code></td>
+                        <td>GET / POST</td>
+                        <td>Autenticación de usuarios</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin</code></td>
+                        <td>GET</td>
+                        <td>Dashboard de administración</td>
+                        <td>Sí (Admin)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/vehiculos</code></td>
+                        <td>GET / POST</td>
+                        <td>CRUD de vehículos</td>
+                        <td>Sí (Admin)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/admin/usuarios</code></td>
+                        <td>GET / POST</td>
+                        <td>CRUD de usuarios</td>
+                        <td>Sí (Admin)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/api/vehicle-models</code></td>
+                        <td>GET</td>
+                        <td>API de modelos (valoración)</td>
+                        <td>No</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h2>2.3 Roles y Permisos</h2>
+        <div class="section">
+            <p>El sistema implementa dos roles principales con permisos granulares:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <strong>Rol: ADMIN</strong><br>
+                    Acceso total al sistema. Puede crear, editar, eliminar vehículos y gestionar usuarios, roles y configuraciones.
+                </div>
+                <div class="feature-item">
+                    <strong>Rol: VIEWER</strong><br>
+                    Acceso de lectura solamente. Puede visualizar vehículos y usuarios, pero sin capacidad de crear o modificar.
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. DESARROLLO FUNCIONAL -->
+        <h1>3. Desarrollo Funcional</h1>
+        
+        <h2>3.1 Autenticación y Autorización</h2>
+        <div class="section">
+            <p>
+                La autenticación se implementa mediante un formulario de login que valida credenciales contra la base de datos. 
+                Las contraseñas se almacenan utilizando <strong>password_hash()</strong> con algoritmo bcrypt, garantizando 
+                máxima seguridad. El sistema incorpora rate limiting para prevenir ataques de fuerza bruta.
+            </p>
+            
+            <h3>Características de seguridad:</h3>
+            <ul>
+                <li><strong>Hash de contraseña:</strong> Algoritmo bcrypt con verificación mediante password_verify()</li>
+                <li><strong>Rate limiting:</strong> Máximo 5 intentos fallidos en 15 minutos por IP</li>
+                <li><strong>Sesiones seguras:</strong> Expiración automática tras 30 minutos de inactividad</li>
+                <li><strong>Tokens CSRF:</strong> Validación en formularios críticos para prevenir solicitudes falsas</li>
+            </ul>
+
+            <p style="margin-top: 15px;">
+                La autorización se gestiona mediante un sistema de permisos basado en roles, almacenados en formato JSON 
+                en la tabla <code>usuarios_roles</code>. Esto permite escalabilidad y flexibilidad sin requeri migraciones 
+                de base de datos cada vez que se añade una nueva funcionalidad.
+            </p>
+        </div>
+
+        <h2>3.2 CRUD de Vehículos</h2>
+        <div class="section">
+            <p>
+                El módulo de gestión de vehículos proporciona operaciones completas de crear, leer, actualizar y eliminar 
+                productos del catálogo.
+            </p>
+
+            <h3>Funcionalidades implementadas:</h3>
+            <ul>
+                <li><strong>Listado con filtros:</strong> Búsqueda por nombre, marca, modelo y estado</li>
+                <li><strong>Paginación:</strong> Visualización de 10 elementos por página</li>
+                <li><strong>Crear vehículo:</strong> Formulario con validación de datos y subida de imagen principal</li>
+                <li><strong>Editar vehículo:</strong> Modificación de todos los campos con auditoría de cambios</li>
+                <li><strong>Galería de imágenes:</strong> Subida múltiple de fotos con validación de tipo/tamaño</li>
+                <li><strong>Eliminación lógica:</strong> Soft delete para preservar trazabilidad histórica</li>
+                <li><strong>Activación/Desactivación:</strong> Control del estado de disponibilidad del vehículo</li>
+            </ul>
+
+            <p style="margin-top: 15px;">
+                Todas las operaciones incluyen validación de permisos, tokens CSRF, validación de archivos y registro 
+                automático en el sistema de auditoría.
+            </p>
+        </div>
+
+        <h2>3.3 CRUD de Usuarios</h2>
+        <div class="section">
+            <p>
+                El módulo de gestión de usuarios permite al administrador crear nuevas cuentas, modificar roles y estados, 
+                y gestionar accesos del sistema de forma centralizada.
+            </p>
+
+            <h3>Operaciones disponibles:</h3>
+            <ul>
+                <li><strong>Listar usuarios:</strong> Tabla con filtros por rol y estado</li>
+                <li><strong>Crear usuario:</strong> Validación de username único, asignación de rol e inicialización de contraseña</li>
+                <li><strong>Editar usuario:</strong> Cambio de rol, estado activo/inactivo, y foto de perfil</li>
+                <li><strong>Desactivar/Activar:</strong> Control de acceso sin borrado físico de datos</li>
+                <li><strong>Validación de datos:</strong> Username único, contraseñas con hash bcrypt</li>
+                <li><strong>Auditoría completa:</strong> Registro de creación, cambios de rol, estado y foto</li>
+            </ul>
+        </div>
+
+        <!-- PAGE BREAK -->
+        <div class="page-break"></div>
+
+        <!-- 4. SEGURIDAD -->
+        <h1>4. Implementación de Seguridad</h1>
+        <div class="section">
+            <p>
+                La seguridad es un pilar fundamental de esta solución. Se han implementado múltiples capas de protección:
+            </p>
+
+            <h3>Mecanismos de Protección</h3>
+            
+            <div class="highlight-box">
+                <strong>1. Gestión de Sesiones</strong><br>
+                Sesiones HTTP seguras con expiración automática, verificación de identidad y terminación adecuada. 
+                Se utiliza regeneración de ID de sesión tras login exitoso para evitar session fixation.
+            </div>
+
+            <div class="highlight-box">
+                <strong>2. Protección CSRF</strong><br>
+                Tokens únicos generados por solicitud en formularios críticos (creación/edición de vehículos y usuarios). 
+                Validación server-side antes de procesar cualquier cambio de datos.
+            </div>
+
+            <div class="highlight-box">
+                <strong>3. Rate Limiting</strong><br>
+                Limitación de intentos de login a 5 intentos en 15 minutos por IP. Previene ataques de fuerza bruta 
+                y diccionario sin afectar usuarios legítimos.
+            </div>
+
+            <div class="highlight-box">
+                <strong>4. Validación de Archivos</strong><br>
+                Comprobaciones multi-capa: tipo MIME, extensión, tamaño máximo (5MB), y nombre seguro. 
+                Almacenamiento fuera del docroot con renombramiento aleatorio.
+            </div>
+
+            <div class="highlight-box">
+                <strong>5. Auditoría Completa</strong><br>
+                Log automático de todas las operaciones CREATE/UPDATE/DELETE con payload de cambios, 
+                IP del usuario y timestamp. Permite trazabilidad total.
+            </div>
+
+            <div class="highlight-box">
+                <strong>6. Conexión a Base de Datos</strong><br>
+                PDO con parámetros vinculados para prevenir inyección SQL. Credenciales en archivo .env, 
+                no en código fuente.
+            </div>
+        </div>
+
+        <!-- 5. DECISIONES TÉCNICAS -->
+        <h1>5. Decisiones Técnicas</h1>
+        <div class="section">
+            <h3>Por qué PHP + PDO</h3>
+            <p>
+                Se eligió PHP como lenguaje backend porque es ampliamente utilizado en producción, tiene excelente 
+                documentación, y es ideal para aplicaciones CRUD. PDO proporciona abstracción de base de datos y 
+                soporte nativo para prepared statements, previniendo inyección SQL.
+            </p>
+
+            <h3>Por qué MySQL</h3>
+            <p>
+                MySQL es una base de datos relacional madura, fiable y de fácil despliegue. Para este proyecto de 
+                gestión de productos y usuarios, es perfecta por su simplicidad y rendimiento en operaciones CRUD.
+            </p>
+
+            <h3>Permisos en JSON</h3>
+            <p>
+                En lugar de crear tablas separadas por cada permiso (modelo extensible pero complejo), se almacenan 
+                permisos como JSON en la tabla de roles. Esto permite:
+            </p>
+            <ul>
+                <li>Añadir nuevos permisos sin migraciones de BD</li>
+                <li>Verificación rápida en el código</li>
+                <li>Flexibilidad para roles personalizados</li>
+            </ul>
+
+            <h3>Soft delete vs hard delete</h3>
+            <p>
+                Se implementó eliminación lógica (soft delete) en lugar de borrado físico. Esto preserva:
+            </p>
+            <ul>
+                <li>Historial de datos para auditoría</li>
+                <li>Referencias de integridad referencial</li>
+                <li>Posibilidad de recuperación</li>
+            </ul>
+        </div>
+
+        <!-- 6. DIAGRAMA DE FLUJO -->
+        <h1>6. Flujo de la Aplicación</h1>
+        <div class="section">
+            <h3>Visor Interactivo de Diagrama SVG</h3>
+            <p>mira el SVG por defecto o carga el tuyo propio para probar el visor</p>
+            
+            <div id="svgViewer" class="svg-viewer-container">
+                <div class="svg-viewer-toolbar">
+                    <button id="zoomIn" title="Ampliar">+</button>
+                    <button id="zoomOut" title="Alejar">-</button>
+                    <button id="resetView" title="Reiniciar vista">Reiniciar</button>
+                    <button id="loadDefault" title="Cargar diagrama predeterminado">Predeterminado</button>
+                    <input type="file" id="svgFile" accept=".svg" title="Cargar archivo SVG">
+                </div>
+                <div class="svg-viewer-content" id="svgContent">
+                    <object id="svgObject" data="img/diagrama-velox.svg" type="image/svg+xml" aria-label="Diagrama de flujo">
+                        <p style="text-align: center; color: #999; padding: 40px;">
+                            No se pudo cargar el diagrama predeterminado. Verifica que exista en img/diagrama-velox.svg o carga uno manualmente.
+                        </p>
+                    </object>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. DESAFIOS Y REFLEXION -->
+        <h1>7. Desafíos y Reflexión</h1>
+        <div class="section">
+            <h3>Desafío 1: Integración de seguridad sin fricción</h3>
+            <p>
+                <strong>Problema:</strong> Implementar CSRF, rate limiting, validación de permisos y auditoría 
+                sin que la experiencia de usuario se vuelva tediosa.
+            </p>
+            <p>
+                <strong>Solución:</strong> Crear componentes reutilizables que se inyecten automáticamente en formularios, 
+                generación de tokens CSRF implícita, y mensajes de error claros y específicos que ayuden al usuario 
+                a entender qué pasó.
+            </p>
+
+            <h3>Desafío 2: Gestión de archivos segura</h3>
+            <p>
+                <strong>Problema:</strong> Permitir subida de imágenes para vehículos y fotos de perfil sin exponer 
+                el servidor a ataques (RCE, malware, etc.).
+            </p>
+            <p>
+                <strong>Solución:</strong> Validaciones multi-capa (tipo MIME real vs extensión), límite de tamaño, 
+                generación de nombres aleatorios, almacenamiento fuera del docroot, y análisis de metadatos.
+            </p>
+
+            <h3>Desafío 3: Gobernanza de accesos escalable</h3>
+            <p>
+                <strong>Problema:</strong> ¿Cómo estructurar roles y permisos para que sea fácil añadir nuevos módulos 
+                en el futuro sin afectar la seguridad?
+            </p>
+            <p>
+                <strong>Solución:</strong> Permisos granulares por acción (view_vehicles, create_vehicles, edit_vehicles) 
+                almacenados en JSON. Un nuevo módulo solo requiere añadir permisos a la BD, sin cambiar código de validación.
+            </p>
+
+            <h3>Desafío 4: Trazabilidad vs privacidad</h3>
+            <p>
+                <strong>Problema:</strong> Auditar todos los cambios (quién, cuándo, qué) sin violar privacidad o saturar 
+                la base de datos.
+            </p>
+            <p>
+                <strong>Solución:</strong> Log de auditoría con payload de cambios (solo campos modificados), retención 
+                limitada, e índices en timestamp e usuario para búsquedas rápidas.
+            </p>
+
+            <h3>Reflexión final</h3>
+            <p style="margin-top: 20px;">
+                Este proyecto demostró que la seguridad no es un agregado, sino parte integral del diseño desde el inicio. 
+                Cada decisión arquitectónica (PDO, permisos JSON, soft delete) se tomó considerando tanto funcionalidad 
+                como protección.
+            </p>
+            <p>
+                Las lecciones clave aprendidas son: (1) la modularidad permite reutilización y mantenimiento, 
+                (2) la documentación clara del código acelera la colaboración, y (3) una buena base de datos bien 
+                normalizada es el cimiento de cualquier aplicación confiable.
+            </p>
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>Tarea "Solución Web Segura" - Módulo Back-End, Octubre 2025</p>
+        </div>
+    </div>
+
+    <script>
+        const svgContent = document.getElementById('svgContent');
+        const svgObject = document.getElementById('svgObject');
+        const svgFile = document.getElementById('svgFile');
+        const zoomIn = document.getElementById('zoomIn');
+        const zoomOut = document.getElementById('zoomOut');
+        const resetView = document.getElementById('resetView');
+        const loadDefault = document.getElementById('loadDefault');
+
+        let zoom = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let currentObjectUrl = null;
+
+        // Aplica transformaciones directamente sobre el <object> (independiente del contenido interno)
+        function applyTransform() {
+            if (!svgObject) return;
+            svgObject.style.transformOrigin = '0 0';
+            svgObject.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+        }
+
+        function resetTransform() {
+            zoom = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform();
+        }
+
+        // Carga el diagrama predeterminado
+        function loadDefaultDiagram() {
+            if (currentObjectUrl) {
+                URL.revokeObjectURL(currentObjectUrl);
+                currentObjectUrl = null;
+            }
+            svgObject.data = 'img/diagrama-velox.svg';
+            resetTransform();
+        }
+
+        // Carga de SVG proporcionado por el usuario
+        svgFile.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (currentObjectUrl) {
+                URL.revokeObjectURL(currentObjectUrl);
+                currentObjectUrl = null;
+            }
+
+            currentObjectUrl = URL.createObjectURL(file);
+            svgObject.data = currentObjectUrl;
+            resetTransform();
+        });
+
+        // Pan (arrastrar) sobre el contenedor - funciona aunque el SVG sea de otro origen
+        svgContent.addEventListener('mousedown', function (e) {
+            if (e.button !== 0) return;
+            isDragging = true;
+            dragStart = { x: e.clientX - panX, y: e.clientY - panY };
+            svgContent.classList.add('dragging');
+        });
+
+        svgContent.addEventListener('mousemove', function (e) {
+            if (!isDragging) return;
+            panX = e.clientX - dragStart.x;
+            panY = e.clientY - dragStart.y;
+            applyTransform();
+        });
+
+        svgContent.addEventListener('mouseup', function () {
+            isDragging = false;
+            svgContent.classList.remove('dragging');
+        });
+
+        svgContent.addEventListener('mouseleave', function () {
+            isDragging = false;
+            svgContent.classList.remove('dragging');
+        });
+
+        // Zoom con la rueda del mouse sobre el contenedor
+        svgContent.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            const zoomSpeed = 0.1;
+            const newZoom = e.deltaY > 0 ? zoom - zoomSpeed : zoom + zoomSpeed;
+            if (newZoom > 0.2 && newZoom < 5) {
+                zoom = newZoom;
+                applyTransform();
+            }
+        }, { passive: false });
+
+        // Controles de la barra
+        zoomIn.addEventListener('click', function () {
+            if (zoom < 5) {
+                zoom += 0.2;
+                applyTransform();
+            }
+        });
+
+        zoomOut.addEventListener('click', function () {
+            if (zoom > 0.2) {
+                zoom -= 0.2;
+                applyTransform();
+            }
+        });
+
+        resetView.addEventListener('click', function () {
+            resetTransform();
+        });
+
+        loadDefault.addEventListener('click', function () {
+            loadDefaultDiagram();
+        });
+
+        // Al cargar el <object>, asegurar que se respete la transformación actual
+        svgObject.addEventListener('load', function () {
+            applyTransform();
+        });
+
+        // Inicialización
+        loadDefaultDiagram();
+    </script>
+</body>
+</html>
